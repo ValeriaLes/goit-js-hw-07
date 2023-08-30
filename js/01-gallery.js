@@ -1,17 +1,20 @@
 import { galleryItems } from './gallery-items.js';
 // Change code below this line
 
-// console.log(galleryItems);
-const galleryEl = document.querySelector('.gallery')
 
 
-const galleryItemsMarkup = galleryItems.map(({ preview, description }) => {
+
+
+const galleryListEl = document.querySelector('.gallery')
+
+
+const galleryItemsMarkup = galleryItems.map(({ preview, original, description }) => {
     return `<li class="gallery__item">
-     <a class="gallery__link" href="">
+     <a class="gallery__link" href="${original}">
        <img
          class="gallery__image"
          src="${preview}"
-         data-source=""
+         data-source="${original}"
          alt="${description}"
        />
      </a>
@@ -21,20 +24,44 @@ const galleryItemsMarkup = galleryItems.map(({ preview, description }) => {
 .join("")
 
 
-galleryEl.innerHTML = galleryItemsMarkup
-// const linkEl = document.querySelector('.gallery-link')
-
-// galleryEl.addEventListener('click', onPictureZoomClick )
-
-//  function onPictureZoomClick (event) {
-
-//     if (!event.target.classList.contains('gallery__link')){
-//         return
-//     }
-// linkEl.href = "galleryItems.original"
-
-// console.log(event.target)
-
-// }
 
 
+
+galleryListEl.innerHTML = galleryItemsMarkup
+
+
+
+galleryListEl.addEventListener('click', onPictureZoomClick )
+
+
+function onPictureZoomClick (event) {
+  event.preventDefault()
+
+  if (event.target.nodeName !== 'IMG'){
+        return
+    }
+    
+
+createBasicLightbox(event.target.dataset.source)
+
+
+}
+
+
+function createBasicLightbox (zoomImageSourceEl) {
+    const instance = basicLightbox.create(`
+    <div class="modal">
+    <img src="${zoomImageSourceEl}" width="800" height="600"
+    </div>
+`)
+instance.show()
+
+document.addEventListener("keydown", event => instance.close() )
+
+
+}
+
+ 
+  
+
+  
