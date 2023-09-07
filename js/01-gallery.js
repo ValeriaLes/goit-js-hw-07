@@ -48,18 +48,27 @@ createBasicLightbox(event.target.dataset.source)
 }
 
 
+
 function createBasicLightbox (zoomImageSourceEl) {
-    const instance = basicLightbox.create(`
+    const modal = basicLightbox.create(`
     <div class="modal">
     <img src="${zoomImageSourceEl}" width="800" height="600"
     </div>
 `)
-instance.show()
+modal.show()
 
-document.addEventListener("keydown", event => instance.close() )
+const modalClose = (event) => {
+  if(event.key === "Escape") {
+    modal.close()
+    document.removeEventListener("keydown", modalClose)
+  } 
+}
 
+document.addEventListener("keydown", modalClose)
 
 }
+
+
 
  
   

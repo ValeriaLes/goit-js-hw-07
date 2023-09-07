@@ -21,18 +21,8 @@ const galleryItemsMarkup = galleryItems.map(({ preview, original, description })
 
 galleryListEl.innerHTML = galleryItemsMarkup
 
-const simpleLightBox = new SimpleLightbox('.gallery__link');
+const simpleLightBox = new SimpleLightbox('.gallery__link', { captionsData: "alt", captionDelay: 250 });
 
-console.log(simpleLightBox.defaultOptions.captionsData)
-
-
-
-
-
-
-// console.log(simpleLightBox.defaultOptions)
-// const altAttr = image.getAttribute()
-// console.log(simpleLightBox.defaultOptions.captionsData = altAttr)
 
  
 
