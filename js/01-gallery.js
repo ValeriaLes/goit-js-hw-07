@@ -40,33 +40,44 @@ function onPictureZoomClick (event) {
   if (event.target.nodeName !== 'IMG'){
         return
     }
-    
 
-createBasicLightbox(event.target.dataset.source)
-
-
-}
-
-
-
-function createBasicLightbox (zoomImageSourceEl) {
-    const modal = basicLightbox.create(`
+const bigPicture = event.target.dataset.source;
+const instance = basicLightbox.create(`
     <div class="modal">
-    <img src="${zoomImageSourceEl}" width="800" height="600"
+    <img src="${bigPicture}" width="800" height="600"
     </div>
-`)
-modal.show()
+`,  { onShow: (instance) => window.addEventListener("keydown", escClose),
+      onClose: (instance) => window.removeEventListener('keydown', escClose)})
 
-const modalClose = (event) => {
-  if(event.key === "Escape") {
-    modal.close()
-    document.removeEventListener("keydown", modalClose)
-  } 
+instance.show()
+
+function escClose (event) {
+  if (event.key === "Escape") {
+    instance.close()
+  }
 }
 
-document.addEventListener("keydown", modalClose)
+const modal = document.querySelector('.modal')
+modal.addEventListener('click', onBigPictureClick)
+function onBigPictureClick (event) {
+if (event.target.nodeName === 'IMG') {
+  instance.close()
+}
+}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
